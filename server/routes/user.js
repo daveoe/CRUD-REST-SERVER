@@ -3,10 +3,11 @@ const app = express();
 const bcrypt = require('bcrypt'); // Encrypt the password
 const _ = require('underscore');
 const User = require('../models/user');
+const {verifyToken, verifyAdmin_Role} = require('../middlewares/authentication');
 
 
 // GET
-app.get('/user', (req, res) => {
+app.get('/user', verifyToken, (req, res) => {
 
     let from = req.query.from || 0;
     from = Number(from); // This is going to transform it into a Number
@@ -44,7 +45,7 @@ app.get('/user', (req, res) => {
 
 
 // POST is use to create new registers
-app.post('/user', (req, res) => {
+app.post('/user', [verifyToken, verifyAdmin_Role], (req, res) => {
 
     let body = req.body
 
@@ -77,7 +78,7 @@ app.post('/user', (req, res) => {
 
 
 // PUT is use to update registers
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', [verifyToken, verifyAdmin_Role], (req, res) => {
 
     let id = req.params.id;
     // Using _ you can filter which properties you allow the user to update
@@ -100,12 +101,11 @@ app.put('/user/:id', (req, res) => {
 
     })
 
-
 })
 
 
 // DELETE
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', [verifyToken, verifyAdmin_Role], (req, res) => {
 
     let id = req.params.id;
 

@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// Importing routes/user.js
-app.use(require('./routes/user'));
+// Importing Global Routes
+app.use(require('./routes/index'));
 
 
 // Data Base
