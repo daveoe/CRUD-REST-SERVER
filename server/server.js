@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const colors = require('colors');
+const path = require('path');
  
 
 // parse application/x-www-form-urlencoded
@@ -16,6 +17,9 @@ app.use(bodyParser.json())
 
 // Importing Global Routes
 app.use(require('./routes/index'));
+
+// Importing public folder
+app.use(express.static(path.resolve(__dirname,'../public')));
 
 
 // Data Base
